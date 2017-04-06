@@ -7,37 +7,29 @@ class TinkerTailor {
 
     int n, k;
 
-    public TinkerTailor(int n, int k) {
+    public TinkerTailor(final int n, final int k) {
         this.n = n;
         this.k = k;
     }
 
-    public List fillPlayersOrderList (List<Integer> playersList) {
-        for (int i = 0; i < this.n; i++){
-            playersList.add(i+1);
+    public List<Integer> fillPlayersOrderList(final List<Integer> playersList) {
+        for (int i = 1; i <= this.n; i++) {
+            playersList.add(i);
         }
         return playersList;
     }
 
-    public List execute() {
+    public List<Integer> execute() {
         List<Integer> outcome = new ArrayList<>();
         List<Integer> playersList = new ArrayList<>();
         playersList = fillPlayersOrderList(playersList);
 
         int startIndex = 0;
-        int reminder;
         int removePlayerIdx;
-        int excludedPlayer;
 
         while (playersList.size() > 0) {
-            reminder = this.k % playersList.size();
-            removePlayerIdx = (reminder - 1) + startIndex;
-            if (removePlayerIdx < 0) {
-                removePlayerIdx = playersList.size() - 1;
-            }
-            excludedPlayer = playersList.get(removePlayerIdx);
-            playersList.remove(removePlayerIdx);
-            outcome.add(excludedPlayer);
+            removePlayerIdx = (this.k + startIndex - 1) % playersList.size();
+            outcome.add(playersList.remove(removePlayerIdx));
             startIndex = removePlayerIdx;
         }
         /*
